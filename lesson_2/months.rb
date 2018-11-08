@@ -12,6 +12,4 @@ months = {
   November: 30,
   December: 31
 }
-
-months.select! {|m, d| d == 30}
-months.each_key {|m| puts m}
+months.each {|m, d| puts m if d == 30}

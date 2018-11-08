@@ -14,8 +14,6 @@ year = gets.chomp.to_i
 
 if year % 4 == 0 && (year % 100 != 0  || year % 400 == 0)
     month_days[1] = 29
-else
-    month_days
 end
 
 day_pos = month_days.take(month - 1).sum + date

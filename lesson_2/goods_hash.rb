@@ -15,7 +15,6 @@ loop do
 end
 
 total_for_items = 0
-total_for_item = 0
 goods_hash.each do |key, val|
      total_for_item = val[:price] * val[:count]
      total_for_items += total_for_item
