@@ -7,15 +7,15 @@ def initialize(start_st, end_st)
 end
 #Может добавлять промежуточную станцию в список
 def add_station(station)
-self.stations_list.insert(-2, station)
+  @tations_list.insert(-2, station)
 end
 #Может удалять промежуточную станцию из списка
 def del_station(station)
-  self.stations_list.delete(station) if station != self.stations_list[0] && station != self.stations_list[-1]
+  @stations_list.delete(station) if station != self.stations_list[0] && station != self.stations_list[-1]
 end
 #Может выводить список всех станций по-порядку от начальной до конечно
 def show_stations
-  self.stations_list.each {|station| print "#{station.station_name} "}
+  stations_list.each {|station| puts station.station_name}
 end
 
 end

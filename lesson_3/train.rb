@@ -10,10 +10,6 @@ class Train
       @route = nil
       @station_pos = 0
     end
-    #Может возвращать текущую скорость
-    def current_speed
-      puts "Текущая скорость = #{self.speed}"
-    end
     #Может тормозить (сбрасывать скорость до нуля)
     def stop
       @speed = 0
@@ -21,20 +17,15 @@ class Train
    #Может набирать скорость
     def accelerate(added_speed)
       @speed += added_speed
-      puts "Скорость увелечина на #{added_speed}"
-    end
-    #Может возвращать количество вагонов
-    def current_carriages
-      @count_of_carriages
     end
     #Может прицеплять
     def add_coach
-      @speed == 0 ? @count_of_carriages += 1 : "сначало остановите поезд"
+      @count_of_carriages += 1 if @speed.zero?
     end
     #Может отцеплять
     def remove_coach
       return if @count_of_carriages == 0
-      @speed == 0 ? @count_of_carriages -= 1 : "сначало остановите поезд"
+      @count_of_carriages -= 1 if @speed.zero?
     end
     #Может принимать маршрут следования (объект класса Route)
     def add_route(route)
@@ -59,7 +50,7 @@ class Train
       @station_pos -= 1
       current_station.check_in(self)
     end
-
+    
     def next_station
       @route.stations_list[@station_pos + 1]
     end
