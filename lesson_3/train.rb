@@ -50,7 +50,7 @@ class Train
       @station_pos -= 1
       current_station.check_in(self)
     end
-    
+
     def next_station
       @route.stations_list[@station_pos + 1]
     end
