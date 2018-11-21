@@ -130,7 +130,7 @@ class RailRoad
     end_st = @query.get_station_index_2(@stations)
     route =  Route.new(@stations[start],@stations[end_st])
     @routes << route
-  rescue RuntimeError => e
+  rescue Exception => e
     puts e.message
     retry
   end
