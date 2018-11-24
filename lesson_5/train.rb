@@ -6,7 +6,7 @@ class Train
   @@trains_all = {}
 
   def initialize(train_number, train_type)
-    @train_number = train_number.to_s
+    @train_number = train_number
     @train_type = train_type
     @speed = 0
     @station_pos = 0

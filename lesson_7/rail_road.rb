@@ -104,17 +104,17 @@ class RailRoad
       end
     end
   end
-  
+
 #station procedures
   def create_station
-    begin 
+    begin
       station =  @query.get_station_name.capitalize
       @stations << Station.new(station)
     rescue
       @query.station_error
       retry
     end
-    @query.station_created(station)  
+    @query.station_created(station)
   end
 
   def show_all_stations
@@ -128,9 +128,9 @@ class RailRoad
     @stations[station].each_train {|train| puts "Номер поезда #{train.train_number}, тип #{train.train_type} , кол-во вагонов #{train.cargoes.size}" }
   end
 
-#train procedures  
+#train procedures
   def create_train
-    train_type = @query.get_train_type 
+    train_type = @query.get_train_type
     return @query.train_error if train_type > 2 || train_type <= 0
     begin
       train_num = @query.get_train_num
@@ -166,7 +166,7 @@ class RailRoad
       puts "Этот вагон уже прицеплен"
     else
       @trains[train].add_cargo(@wagons[cargo])
-    end      
+    end
   end
 
   def del_cargo
@@ -196,7 +196,7 @@ class RailRoad
    return @query.object_error if @trains.empty?
     @trains.each { |train| puts train.train_number }
   end
-  
+
   def train_cars_info
     return @query.train_error unless @trains.any?
     train = @query.get_train(@trains)
@@ -221,12 +221,12 @@ class RailRoad
   rescue Exception => e
     puts e
   end
-  
+
   def show_all_cars
     return @query.object_error if @wagons.empty?
     @wagons.each { |w| puts "#{w.car_num} || #{w.type}" }
   end
-  
+
   def take_space_in_car
     return @query.simple_error if @wagons.empty?
     car = @query.get_car(@wagons)
@@ -234,7 +234,7 @@ class RailRoad
     if  @wagons[car].is_a?(PassengerCarriage)
       @wagons[car].take_space
     else
-      puts "Введите сколько занять пространства" 
+      puts "Введите сколько занять пространства"
       space = gets.chomp.to_i
       @wagons[car].take_space(space)
     end
@@ -254,11 +254,11 @@ class RailRoad
 
   def add_st_to_route
     return @query.simple_error unless (@routes.any? && @stations.any?)
-    route = @query.get_route_index(@routes) 
+    route = @query.get_route_index(@routes)
     station = @query.get_station_index(@stations)
     @routes[route].add_station(@stations[station]) if !@stations[station].nil?
   rescue NoMethodError
-    @query.simple_error 
+    @query.simple_error
   end
 
   def del_station_from_route
@@ -282,12 +282,12 @@ class RailRoad
   def route_in_range?(route)
     @routes[route].nil? || route < 0
   end
-  
+
   def car_in_range?(wagon)
     @wagons[wagon].nil? || wagon < 0
-  end  
+  end
 
-   
+
   def create_all
 
     @wagons << PassengerCarriage.new("po2",5)
@@ -296,7 +296,7 @@ class RailRoad
     @trains << PassengerTrain.new('fff-22')
     @trains << CargoTrain.new('ccc-44')
     @stations << Station.new("moscow")
-    @stations << Station.new("petersburg")
+    @stations << Station.new("peterburg")
     @routes << Route.new(@stations[0], @stations[1])
 
   end
