@@ -1,27 +1,29 @@
-class CargoCarriage < Carriage
+# frozen_string_literal: true
 
+class CargoCarriage < Carriage
   attr_reader :space, :taken_space
 
-  def initialize(car_num, space)
-    @type = self.class
+  def initialize(space)
+    @type = :cargo
     @space = space
     @taken_space = 0
+    validate!
     super
-    @@cars << self
   end
 
-  def take_space(space)
+  def take_space
+    puts "Введите сколько занять пространства"
+    space = gets.chomp.to_i
     @taken_space += space unless space + @taken_space > @space
   end
 
-  def space_available
+  def free_space
     @space - @taken_space
   end
 
   protected
 
   def validate!
-    raise "Вместимость должна быть указана в цифрах" if self.space == 0
+    raise "Initial space must be digit" if @space.zero?
   end
-
 end

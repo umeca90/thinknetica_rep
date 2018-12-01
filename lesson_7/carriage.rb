@@ -1,24 +1,28 @@
+# frozen_string_literal: true
+
 class Carriage
   include CompanyName
   include Validator
+  include InstanceCounter
 
-  CAR_REGEXP = /(^[a-zA-Z]{2}-?[0-9]{1}$)|(^[а-яА-Я]{2}-?[0-9]{1}$)/
-
-  attr_reader :type, :car_num
+  attr_reader :type, :num
 
   @@cars = []
 
-  def initialize(car_num, *_args)
-    @car_num = car_num.upcase
+  class << self
+    def all
+      @@cars.each { |c| puts c }
+    end
+
+    def cars
+      @@cars
+    end
+  end
+
+  def initialize(*_args)
+    @num = self.class.instances
     @@cars << self
+    register_instance
     validate!
   end
-
-  protected
-
-  def validate!
-    raise "Неверный формат номера" if car_num !~ CAR_REGEXP
-    #raise "Свободное место должно быть указано в цифрах" if self.space == 0
-  end
-
 end

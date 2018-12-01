@@ -1,27 +1,26 @@
-class PassengerCarriage < Carriage
+# frozen_string_literal: true
 
+class PassengerCarriage < Carriage
   attr_reader :seats, :taken_seats
 
-  def initialize(car_num, seats)
-    @type = self.class
+  def initialize(seats)
+    @type = :passenger
     @seats = seats
     @taken_seats = 0
     super
-    @@cars << self
   end
 
   def take_seat
     @taken_seats += 1 unless @taken_seats == @seats
   end
 
-  def seats_available
+  def free_seats
     @seats - @taken_seats
   end
 
   protected
 
   def validate!
-    raise "Количество пассажирских мест должно быть указано в цифрах" if self.seats == 0
+    raise "Initial number of seats must be digit" if seats.zero?
   end
-
 end

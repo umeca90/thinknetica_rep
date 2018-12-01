@@ -1,32 +1,44 @@
+# frozen_string_literal: true
+
 class Route
   include InstanceCounter
   include Validator
-  
-  attr_reader :stations_list
 
+  attr_reader :list
+  @@routes = []
   def initialize(start_st, end_st)
-    @stations_list = [start_st, end_st]
+    @list = [start_st, end_st]
+    @@routes << self
     validate!
     register_instance
   end
 
   def add_station(station)
-    @stations_list.insert(-2, station) unless @stations_list.include?(station)    
+    @list.insert(-2, station) unless @list.include?(station)
   end
 
   def del_station(station)
-    @stations_list.delete(station)
+    @list.delete(station) if @list.last != station && rist.first != station
   end
-
 
   def show_stations
-    @stations_list.each {|station| print "#{station.station_name} | "}
+    @list.each { |station| print "#{station.name} | " }
   end
-  
+
   protected
-  
+
+  class << self
+    def all
+      @@routes.each { |r| puts r }
+    end
+
+    def routes
+      @@routes
+    end
+  end
+
   def validate!
-    raise "Станции должны быть заполнены!" unless @stations_list.all?{|st| st.is_a?(Station)}
-    raise "Начальная и конечная станции должны отличаться!" if @stations_list.first == @stations_list.last
+    raise "Please fill stations" unless @list.all? { |st| st.is_a?(Station) }
+    raise "First and last station must differ" if @list.first == @list.last
   end
 end
