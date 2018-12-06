@@ -5,7 +5,7 @@ class Station
   include Validation
   extend Accessors
 
-  attr_reader :name, :trains_in
+  attr_accessor_with_history :name, :trains_in
   validate :name, :presence
   validate :name, :format, /^([a-zA-Z0-9]{4,}$)|^([а-яА-Я0-9]{4,}$)/
   @@stations = {}

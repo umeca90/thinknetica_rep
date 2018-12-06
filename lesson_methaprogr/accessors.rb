@@ -7,7 +7,7 @@ module Accessors
       var_history = "@#{name}_history".to_sym
       define_method(name) { instance_variable_get(var_name) }
       define_method("#{name}_history") { instance_variable_get(var_history) }
-      define_method("name=".to_sym) do |value|
+      define_method("#{name}=".to_sym) do |value|
         instance_variable_set(var_name, value)
         instance_variable_set(var_history, []) unless instance_variable_get(var_history)
         instance_variable_get("@#{name}_history").push(value)
