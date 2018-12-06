@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative "route"
 class Train
   include CompanyName
   include InstanceCounter
@@ -7,9 +8,8 @@ class Train
   include CargoInfo
   extend  Accessors
 
-  # TRAIN_REGEXP = /^\w{3}-?\w{2}$/.freeze
-
-  attr_reader :speed, :cars, :num, :type, :route
+  attr_reader :speed, :cars, :num, :type
+  strong_attr_accessor :route, Route
   validate :num, :presence
   validate :num, :format, /^\w{3}-?\w{2}$/
   @@trains_all = {}
@@ -20,7 +20,6 @@ class Train
     validate!
     @speed = 0
     @cars = []
-
     trains_list
     register_instance
   end

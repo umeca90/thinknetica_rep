@@ -22,8 +22,6 @@ module Accessors
       raise(ArgumentError, "Неверный класс") unless value.is_a?(attr_class)
 
       instance_variable_set(var_name, value)
-    rescue ArgumentError => e
-      puts e.inspect.to_s
     end
   end
 end

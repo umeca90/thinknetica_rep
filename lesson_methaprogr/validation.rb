@@ -3,24 +3,24 @@
 module Validation
   def self.included(base)
     base.extend ClassMethods
-    base.send :include, InstanceMethods
+    base.include InstanceMethods
   end
 
   module ClassMethods
-    attr_accessor :validator_meth
+    attr_accessor :validations
 
-    def validate(name, vl_type, option = nil)
-      @validator_meth ||= []
-      @validator_meth << { attr_name: name, vl_meth: vl_type, option: option }
+    def validate(name, validation_type, option = nil)
+      @validations ||= []
+      @validations << { attr: name, type: validation_type, option: option }
     end
   end
 
   module InstanceMethods
     def validate!
-      self.class.validator_meth.each do |param|
-        validation_method = "validate_#{param[:vl_meth]}".to_sym
-        attribute = instance_variable_get("@#{param[:attr_name]}")
-        option = param[:option]
+      self.class.validations.each do |validation|
+        validation_method = "validate_#{validation[:type]}".to_sym
+        attribute = instance_variable_get("@#{validation[:attr]}")
+        option = validation[:option]
         send(validation_method, attribute, option)
       end
     end
@@ -32,16 +32,16 @@ module Validation
       false
     end
 
-    def validate_presence(attr_name, _option)
-      raise "Can't be empty" if attr_name.nil? || attr_name.to_s.empty?
+    def validate_presence(attribute, _option)
+      raise "Can't be empty" if attribute.nil? || attribute.to_s.empty?
     end
 
-    def validate_format(attr_name, format)
-      raise "Неверный формат значения" if attr_name !~ format
+    def validate_format(attribute, format)
+      raise "Неверный формат значения" if attribute !~ format
     end
 
-    def validate_type(attr_name, class_of)
-      raise "Не подходящий класс объекта" unless attr_name.is_a?(class_of)
+    def validate_type(attribute, class_of)
+      raise "Не подходящий класс объекта" unless attribute.is_a?(class_of)
     end
   end
 end

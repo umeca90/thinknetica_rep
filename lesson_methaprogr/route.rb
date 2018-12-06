@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative "station"
 class Route
   include InstanceCounter
   include Validation
@@ -24,8 +25,8 @@ class Route
     @start_st = start_st
     @end_st = end_st
     @list = [start_st, end_st]
-    @@routes << self
     validate!
+    @@routes << self
     register_instance
   end
 
